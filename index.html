@@ -35,19 +35,21 @@
         <p>We are not in any way affliated to the PDPC. You will need a fairly recent version of Chrome / Firefox / Safari. Report problems to xkjyeah@gmail.com :)</p>
 
         To begin, <div class="g-signin2"
+            style="width: 100%"
             data-onsuccess="onSignIn">Sign in with Google</div>
         </p>
 
         <form>
         <h3>Personal Particulars</h3>
+        {{ email == ''  ? 'Click the button above to sign in.' : ''}}
         <form-item>
             <label>Your Name</label>
-            <input type="text" v-model="name" />
+            <input type="text" v-model="name" disabled />
         </form-item>
 
         <form-item>
             <label>Your Email Address</label>
-            <input type="email" v-model="email" />
+            <input type="email" v-model="email" disabled />
         </form-item>
         <hr/>
 
