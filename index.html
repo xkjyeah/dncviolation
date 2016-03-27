@@ -132,7 +132,10 @@
         </form-item>
 
         <label>Attach your screenshot</label>
-        <input type="file" @change="fileSelected" id="screenshot" />
+        <input type="file" @change="fileSelected"
+                id="screenshot"
+                accept="image/*"
+                />
 
         <h3> Are you subscribed to any of the following services?</h3>
         <form-item>
@@ -246,7 +249,9 @@
     </tr>
     <tr>
     <td colspan="3">
-    (please see attachment)
+        <!-- Data URIs are not allowed in emails -->
+        <img v-if="sendingMode" src="cid:TheEvidence" width="50%" />
+        <img v-else :src="attachmentSrc" width="50%" />
     </td>
     </tr>
 </table>

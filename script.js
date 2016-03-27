@@ -46,6 +46,8 @@ function b64EncodeUnicode(str) {
     TheForm = new Vue({
         el: 'form',
         data: {
+            sendingMode: false,
+
             destEmail: 'Blank',
             medium: 'SMS',
             name: '',
@@ -83,7 +85,7 @@ function b64EncodeUnicode(str) {
         'To: ' + this.destEmail,
         'Subject: Report a Do Not Call Registry concern',
         'MIME-Version: 1.0',
-        'Content-Type: multipart/mixed; boundary="' + boundary + '"',
+        'Content-Type: multipart/related; boundary="' + boundary + '"',
         'Content-Transfer-Encoding: 8bit',
         ];
                         var messageBody = [
@@ -130,7 +132,8 @@ function b64EncodeUnicode(str) {
                     + this.$file.name.replace(/"/g, '_')
                     + '"',
         'Content-Transfer-Encoding: base64',
-        'Content-Disposition: attachment; filename="'
+        'Content-ID: <TheEvidence>',
+        'Content-Disposition: inline; filename="'
                     + this.$file.name.replace(/"/g, '_')
                     + '"',
         '',
@@ -178,6 +181,16 @@ function b64EncodeUnicode(str) {
             sendEmail: function(event, toWhom) {
                 event.preventDefault();
 
+                var self = this;
+                this.sendingMode = true;
+
+                this.$nextTick(function () {
+                    /* Let the attachment image be updated first... */
+                    self.sendEmail2(toWhom);
+                });
+            },
+
+            sendEmail2: function (toWhom) {
                 this.destEmail = toWhom == 'self' ? this.profile.getEmail() : 'info@pdpc.gov.sg';
 
                 var raw = b64EncodeUnicode(this.message)
@@ -189,6 +202,7 @@ function b64EncodeUnicode(str) {
                 var messageStructure = {
                     raw: raw,
                 };
+                var self = this;
 
                 var request = new XMLHttpRequest();
                 request.onreadystatechange = function() {
@@ -202,6 +216,8 @@ function b64EncodeUnicode(str) {
                         else {
                             alert('I didn\'t expect an error code of ' + request.status + '... Your report wasn\'t sent. You\'ll have to do it manually I guess. Sorry');
                         }
+
+                        self.sendingMode = false;
                         console.log(request.responseText);
                     }
                 };
