@@ -193,6 +193,15 @@ function b64EncodeUnicode(str) {
                 var request = new XMLHttpRequest();
                 request.onreadystatechange = function() {
                     if (request.readyState == XMLHttpRequest.DONE) {
+                        if (request.status == 200) {
+                            alert('Thank you for making Singapore a more pleasant place. You can check your Sent items folder to confirm that the report has been sent.')
+                        }
+                        else if (request.status >= 400) {
+                            alert('Oops it seems that there have been some error sending the report. You\'d have to do it manually I guess. Sorry');
+                        }
+                        else {
+                            alert('I didn\'t expect an error code of ' + request.status + '... Your report wasn\'t sent. You\'ll have to do it manually I guess. Sorry');
+                        }
                         console.log(request.responseText);
                     }
                 };
