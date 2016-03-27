@@ -46,6 +46,7 @@ function b64EncodeUnicode(str) {
     TheForm = new Vue({
         el: 'form',
         data: {
+            destEmail: 'Blank',
             medium: 'SMS',
             name: '',
             fullName: '',
@@ -79,7 +80,7 @@ function b64EncodeUnicode(str) {
                     var messageHeaders = [
         'Date: ' + new Date().toString(),
         'From: ' + this.name + ' <' + this.email + '>',
-        'To: ' + 'info@pdpc.gov.sg',
+        'To: ' + this.destEmail,
         'Subject: Report a Do Not Call Registry concern',
         'MIME-Version: 1.0',
         'Content-Type: multipart/mixed; boundary="' + boundary + '"',
@@ -174,8 +175,10 @@ function b64EncodeUnicode(str) {
                 window.DURL = freader.readAsDataURL(file);
             },
 
-            sendEmail: function(event) {
+            sendEmail: function(event, toWhom) {
                 event.preventDefault();
+
+                this.destEmail = toWhom == 'self' ? this.profile.getEmail() : 'info@pdpc.gov.sg';
 
                 var raw = b64EncodeUnicode(this.message)
                         .replace(/\+/g, '-')
