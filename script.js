@@ -181,11 +181,20 @@ function b64EncodeUnicode(str) {
             sendEmail: function(event, toWhom) {
                 event.preventDefault();
 
+                if (!this.profile) {
+                    alert("You need to log in with GMail first!");
+                    return;
+                }
+
+                if (!confirm("You are sending this email as " + this.profile.getEmail() + ". Proceed?")) {
+                    return;
+                }
+
                 var self = this;
                 this.sendingMode = true;
 
                 this.$nextTick(function () {
-                    /* Let the attachment image be updated first... */
+                    /* Let the attachment image be updated first to show the CID... */
                     self.sendEmail2(toWhom);
                 });
             },
@@ -242,6 +251,7 @@ window.onSignIn = function(user) {
     TheForm.user = user;
     document.getElementById('full-name').focus();
 
+    /* for debugging purposes */
     window.XX = profile;
     window.USER = user;
 };

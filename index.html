@@ -287,8 +287,8 @@ I also understand that I may be required to give a formal statement and appear i
 
         </div>
 
-        <button class="btn btn-primary" type="submit" @click="sendEmail($event, 'info@pdpc.gov.sg')">Report to PDPC!</button>
-        <button class="btn btn-default" type="submit" @click="sendEmail($event, 'self')">I humji, send to myself first</button>
+        <button :disabled="sendingMode" class="btn btn-primary" type="submit" @click="sendEmail($event, 'info@pdpc.gov.sg')">Report to PDPC!</button>
+        <button :disabled="sendingMode" class="btn btn-default" type="submit" @click="sendEmail($event, 'self')">I humji, send to myself first</button>
 
         </form>
 
