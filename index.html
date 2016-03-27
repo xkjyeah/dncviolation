@@ -12,6 +12,7 @@
         <title>Report a Do-not-call Register Violation</title>
 
 
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
         <meta name="description" content="Report a Do-Not-Call Register violation easily with this form. Good-bye, 'financial solutions for all my needs'!" />
 
         <!-- Twitter Card data -->
@@ -129,10 +130,9 @@
         <form-item>
             <input type="radio" class="btn btn-default" v-model="medium" value="Fax"><label>By Fax</label>
         </form-item>
-        <form-item>
-            <label>Attach your screenshot</label>
-            <input type="file" @change="fileSelected" id="screenshot" />
-        </form-item>
+
+        <label>Attach your screenshot</label>
+        <input type="file" @change="fileSelected" id="screenshot" />
 
         <h3> Are you subscribed to any of the following services?</h3>
         <form-item>
