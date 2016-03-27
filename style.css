@@ -1,0 +1,45 @@
+html {
+    margin: 1em;
+}
+
+.form-item {
+    display: flex;
+    flex-direction: row;
+    margin: 5px 0 5px 0;
+}
+
+.form-item label {
+    flex: 0 0 auto;
+    padding: 5px;
+}
+
+.form-item input[type='text'],
+.form-item input[type='email'],
+.form-item input[type='telephone'],
+.form-item input[type='date'],
+.form-item input[type='time']
+{
+    flex: 1 1 auto;
+}
+
+.form-item input[type="checkbox"] {
+    flex: 0 0 auto;
+}
+
+.legal-notice {
+    border: solid 1px black;
+    padding: 1em;
+    box-sizing: border-box;
+}
+.email-preview {
+    border: solid 1px black;
+    padding: 1em;
+    box-sizing: border-box;
+    max-height: 200px;
+    overflow: auto;
+}
+
+#preview {
+    max-width: 300px;
+    width: 100%;
+}

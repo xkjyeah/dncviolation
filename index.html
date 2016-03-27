@@ -1,0 +1,258 @@
+<!doctype html>
+<html>
+    <head>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.19/vue.js"></script>
+        <script src="script.js"></script>
+        <link rel="stylesheet" href="bootstrap/css/bootstrap.css" />
+        <link rel="stylesheet" href="style.css" />
+        <script src="https://apis.google.com/js/platform.js?onload=setupGapi" async defer></script>
+        <meta name="google-signin-client_id" content="861261002400-aiu03iepnihmnm3t3mfhmp2fn6c13d8k.apps.googleusercontent.com">
+        <meta name="google-signin-scope" content="https://www.googleapis.com/auth/gmail.compose email profile">
+        <meta charset="utf-8" />
+    </head>
+    <body>
+        <h2>Report DNC Violation</h2>
+
+        <p>
+        This website uses your Gmail account to send a complaint to the
+        Personal Data Protection Commission (PDPC).
+        We will not store your personal information in any way.
+        You can inspect the source code of this website at Github.
+        </p>
+
+        <p>We are not in any way affliated to the PDPC.</p>
+
+        To begin, <div class="g-signin2"
+            data-onsuccess="onSignIn">Sign in with Google</div>
+        </p>
+
+        <form>
+        <h3>Personal Particulars</h3>
+        <form-item>
+            <label>Your Name</label>
+            <input type="text" v-model="name" />
+        </form-item>
+
+        <form-item>
+            <label>Your Email Address</label>
+            <input type="email" v-model="email" />
+        </form-item>
+        <hr/>
+
+        <form-item>
+            <label>Your Full Name</label>
+            <input type="text" id="full-name" v-model="fullName" />
+        </form-item>
+
+
+        <form-item>
+            <label>Your Phone Number</label>
+            <input type="telephone" id="telephone" v-model="telephone" />
+        </form-item>
+
+        <form-item>
+            <label>Your NRIC / FIN / Passport</label>
+            <input type="text" v-model="nric" />
+        </form-item>
+
+        <h4>Your Telco</h4>
+        <form-item>
+            <input type="radio" class="btn btn-default" v-model="telco" value="Singtel"><label>Singtel</label>
+        </form-item>
+        <form-item>
+            <input type="radio" class="btn btn-default" v-model="telco" value="Starhub"><label>Starhub</label>
+        </form-item>
+        <form-item>
+            <input type="radio" class="btn btn-default" v-model="telco" value="M1"><label>M1</label>
+        </form-item>
+
+        <h3>Violation Details</h3>
+        <form-item>
+            <label>Date / time of violation</label>
+            <input type="date" v-model="date" />
+            <input type="time" v-model="time" />
+        </form-item>
+        <div>
+            <button class="btn btn-primary" type="button" @click="setTime(-60000)">1 minute ago</button>
+            <button class="btn btn-primary" type="button" @click="setTime(-5 * 60000)">10 minutes ago</button>
+            <button class="btn btn-primary" type="button" @click="setTime(-30 * 60000)">30 minutes ago</button>
+            <button class="btn btn-primary" type="button" @click="setTime(-60 * 60000)">1 hour ago</button>
+            <button class="btn btn-primary" type="button" @click="setTime(-120 * 60000)">2 hours ago</button>
+        </div>
+
+
+        <h4>How was it commited?</h4>
+        <form-item>
+            <input type="radio" class="btn btn-default" v-model="medium" value="Phone"><label>By Phone</label>
+        </form-item>
+        <form-item>
+            <input type="radio" class="btn btn-default" v-model="medium" value="SMS"><label>By SMS/MMS</label>
+        </form-item>
+        <form-item>
+            <input type="radio" class="btn btn-default" v-model="medium" value="Whatsapp"><label>By Whatsapp</label>
+        </form-item>
+        <form-item>
+            <input type="radio" class="btn btn-default" v-model="medium" value="WeChat"><label>By WeChat</label>
+        </form-item>
+        <form-item>
+            <input type="radio" class="btn btn-default" v-model="medium" value="Fax"><label>By Fax</label>
+        </form-item>
+        <form-item>
+            <label>Attach your screenshot</label>
+            <input type="file" @change="fileSelected" id="screenshot" />
+        </form-item>
+
+        <h3> Are you subscribed to any of the following services?</h3>
+        <form-item>
+            <input type="checkbox" v-model="multiSIM" />
+            <label>Multi SIM</label>
+        </form-item>
+        <form-item>
+            <input type="checkbox" v-model="mobileFax" />
+            <label>Mobile Fax</label>
+        </form-item>
+        <form-item>
+            <input type="checkbox" v-model="callForwarding" />
+            <label>Call forwarding</label>
+        </form-item>
+    <h3>Legal Notice</h3>
+    <div class="legal-notice">
+        <p><b>Step 3 -- Declaration</b></p>
+        <p>By submitting this report, I confirm that the account as stated above is true and correct. </p>
+        <p>I understand that the information collected by PDPC will be used and disclosed: 
+        <ul>
+        <li>
+        By PDPC for the performance of its functions and duties, including Investigations and proceedings. In particular, but without limitation, I understand that there may be disclosure of my particulars such as full name and telephone number to other parties including the organisation that is the subject of this complaint, telecommunications service providers and government agencies;</li>
+        <li>For other purposes that PDPC will notify me and obtain my consent for from time to time; and</li>
+        <li>For any purpose lawfully required by any court, or lawfully required or permitted under the Act or other laws.</li>
+        </ul>
+        I also understand that I may be required to give a formal statement and appear in Court in relation to the statement or other matters within my knowledge. 
+
+        </p>
+        </div>
+
+    <h3>Preview</h3>
+
+        <div class="email-preview">
+<p><b>DO NOT CALL REGISTRY COMPLAINT FORM</b>
+
+<p><b>Please provide the following information. Fields marked with an * are mandatory.</b>
+
+<p><b>Step 1 - Your Details</b>
+<table border="1">
+<tr>
+    <td>Name (in full) *</td>
+    <td colspan="3"> {{fullName }}</td></tr>
+<tr>
+    <td>NRIC / FIN / Passport Number*</td>
+    <td colspan="3"> {{nric }}</td></tr>
+<tr>
+    <td>Singapore telephone number that received the message*</td>
+    <td colspan="3"> {{telephone }}</td>
+</tr>
+<tr>
+    <td>Please state the telecommunications service provider for the Singapore telephone number*</td>
+    <td colspan="3"> {{telco }}</td>
+</tr>
+<tr>
+    <th rowspan="2">Whether you have subscribed to any of the following services?</td>
+    <td>Multi-SIM</td>
+    <td>Mobile fax</td>
+    <td>Call forwarding</td>
+</tr>
+<tr>
+    <td>
+        {{multiSIM | cb true 'Yes'}}
+        <br/>
+        {{multiSIM | cb false 'No'}}
+    </td>
+    <td>
+        {{mobileFax | cb true 'Yes'}}
+        <br/>
+        {{mobileFax | cb false 'No'}}
+    </td>
+    <td>
+        {{callForwarding | cb true 'Yes'}}
+        <br/>
+        {{callForwarding | cb false 'No'}}
+    </td>
+</tr>
+</table>
+
+<p><b>Step 2 -- Information relating to the complaint</b></p>
+<table border="1">
+    <tr>
+        <td>Date and time of the message you received*</td>
+        <td colspan="2">{{date}}, {{time}}</td>
+    </tr>
+
+    <tr>
+        <td rowspan="2">In what form was the message received?*</td>
+        <td>{{medium | cb 'Phone' 'Phone'}}</td>
+        <td>{{medium | cb 'SMS' 'SMS / MMS'}}</td>
+    </tr>
+    <tr>
+        <td>{{medium | cb 'Fax'}}</td>
+        <td>
+        {{medium != 'Phone' && medium != 'SMS' && medium != 'Fax' ? '✓ ' : '_ ' }}
+        Other sound or visual form (e.g. smartphone app).
+        <br>Please state the form:
+        <br>
+        {{medium != 'Phone' && medium != 'SMS' && medium != 'Fax' ? medium : '' }}
+        </td>
+    </tr>
+
+    <tr>
+    <td colspan="3">
+    <b>Please describe the contents of the message. *</b>
+    Guiding points:
+    <br/>1) Where possible, please attach and retain the original and unaltered:
+    <br/>&nbsp;&nbsp;(i) screenshot of the message (such as SMS, MMS and WhatsApp);
+    <br/>&nbsp;&nbsp;(ii) call log; or
+    <br/>&nbsp;&nbsp;(iii) fax.
+    </td>
+    </tr>
+    <tr>
+    <td colspan="3">
+        <img :src="attachmentSrc" width="50%"/>
+    </td>
+    </tr>
+</table>
+
+<p><b>Step 3 -- Declaration</b></p>
+<p>By submitting this report, I confirm that the account as stated above is true and correct. </p>
+<p>I understand that the information collected by PDPC will be used and disclosed: 
+<ul>
+<li>
+By PDPC for the performance of its functions and duties, including Investigations and proceedings. In particular, but without limitation, I understand that there may be disclosure of my particulars such as full name and telephone number to other parties including the organisation that is the subject of this complaint, telecommunications service providers and government agencies;</li>
+<li>For other purposes that PDPC will notify me and obtain my consent for from time to time; and</li>
+<li>For any purpose lawfully required by any court, or lawfully required or permitted under the Act or other laws.</li>
+</ul>
+I also understand that I may be required to give a formal statement and appear in Court in relation to the statement or other matters within my knowledge. 
+</p>
+<b>{{true | cb true 'I understand and agree to the above *'}}</b>
+
+<table border="0">
+<tr>
+<td align="center">
+{{fullName}}
+<br/>-------------
+<br/>Signature of Complainant
+</td>
+
+<td align="center">
+{{today}}
+<br/>-------------
+<br/>Date
+</td>
+</tr>
+</table>
+
+        </div>
+
+        <button class="btn btn-primary" type="submit" @click="sendEmail">Report to PDPC!</button>
+
+        </form>
+
+    </body>
+</html>
